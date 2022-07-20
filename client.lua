@@ -1,3 +1,5 @@
+local atBank	= false
+
 CreateThread(function()
     ped = PlayerPedId()
     pedCoords = GetEntityCoords(ped)
@@ -20,23 +22,11 @@ CreateThread(function()
                 print("Check!")
                 break
             else
-                isInBank = false
+                atBank = false
             end
         end
     end
 
-    for k, v in pairs(Config.atms) do
-        local model = GetHashKey(v)
-        entity = GetClosestObjectOfType(pedCoords.x, pedCoords.y, pedCoords.z, 1.0, model, false, false, false)
-    
-        if entity ~= 0 then
-            print("Check ATM!")
-            break
-        else
-            atmFound = false
-        end
-    end
-     
     for k, v in pairs(Config["banks"]) do
         local blip = AddBlipForCoord(v.x, v.y, v.z)
         SetBlipSprite(blip, 207)
