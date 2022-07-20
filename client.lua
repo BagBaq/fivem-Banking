@@ -112,7 +112,7 @@ AddEventHandler('balance:back', function(balance)
 end)
 
 RegisterNUICallback('transfer', function(data)
-	TriggerServerEvent('banking:transfer', data.to, data.amountt)
+	TriggerServerEvent('banking:transferCash', data.to, data.amountt)
 	TriggerServerEvent('banking:checkBalance')
 end)
 
