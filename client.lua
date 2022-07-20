@@ -56,6 +56,12 @@ CreateThread(function()
     end
 end)
 
+RegisterNUICallback('NUIFocusOff', function()
+	isMenuOpen = false
+	SetNuiFocus(false, false)
+	SendNUIMessage({type = 'closeAll'})
+end)
+
 function guiMessage(lineOne, lineTwo, lineThree, duration)
     BeginTextCommandDisplayHelp("THREESTRINGS")
     AddTextComponentSubstringPlayerName(lineOne)
