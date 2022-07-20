@@ -1,5 +1,13 @@
+ESX				= nil
 local atBank	 = false
 local isMenuOpen = true
+
+Citizen.CreateThread(function()
+	while ESX == nil do
+		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+		Citizen.Wait(0)
+	end
+end)
 
 CreateThread(function()
     ped = PlayerPedId()
@@ -28,7 +36,7 @@ CreateThread(function()
                 isMenuOpen = true
 			SetNuiFocus(true, true)
 			SendNUIMessage({type = 'openGeneral'})
-			TriggerServerEvent('bank:balance')
+			TriggerServerEvent('banking:checkBalance')
 			local playerPed = GetPlayerPed(-1)
                 end
                 if IsControlJustPressed(1, 322) then
@@ -71,4 +79,45 @@ function guiMessage(lineOne, lineTwo, lineThree, duration)
     -- shape (always 0), loop (bool), makeSound (bool), duration (5000 max 5 sec)
     EndTextCommandDisplayHelp(0, false, true, duration or 5000)
 end
+
+RegisterNetEvent('currentBalance')
+AddEventHandler('currentBalance', function(balance)
+	local id = PlayerId()
+	local playerName = GetPlayerName(id)
+	
+	SendNUIMessage({
+		type = "balanceHUD",
+		balance = balance,
+		player = playerName
+		})
+end)
+
+RegisterNUICallback('deposit', function(data)
+	TriggerServerEvent('banking:depoMoney', tonumber(data.amount))
+	TriggerServerEvent('banking:checkBalance')
+end)
+
+RegisterNUICallback('withdraw', function(data)
+	TriggerServerEvent('banking:withdraw', tonumber(data.amountw))
+	TriggerServerEvent('banking:checkBalance')
+end)
+
+RegisterNUICallback('balance', function()
+	TriggerServerEvent('banking:checkBalance')
+end)
+
+RegisterNetEvent('balance:back')
+AddEventHandler('balance:back', function(balance)
+	SendNUIMessage({type = 'balanceReturn', bal = balance})
+end)
+
+RegisterNUICallback('transfer', function(data)
+	TriggerServerEvent('banking:transfer', data.to, data.amountt)
+	TriggerServerEvent('banking:checkBalance')
+end)
+
+RegisterNetEvent('banking:effect')
+AddEventHandler('banking:effect', function(type, message)
+	SendNUIMessage({type = 'result', m = message, t = type})
+end)
 
