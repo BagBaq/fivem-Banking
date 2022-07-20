@@ -116,8 +116,8 @@ RegisterNUICallback('transfer', function(data)
 	TriggerServerEvent('banking:checkBalance')
 end)
 
-RegisterNetEvent('banking:effect')
-AddEventHandler('banking:effect', function(type, message)
+RegisterNetEvent('banking:showAlert')
+AddEventHandler('banking:showAlert', function(type, message)
 	SendNUIMessage({type = 'result', m = message, t = type})
 end)
 
