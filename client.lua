@@ -1,4 +1,5 @@
-local atBank	= false
+local atBank	 = false
+local isMenuOpen = true
 
 CreateThread(function()
     ped = PlayerPedId()
@@ -20,10 +21,21 @@ CreateThread(function()
             
             if dist < 1.5 then
                 print("Check!")
-                if IsControlPressed(0,46) then
+                guiMessage("Bankaya erisin E")
+                
+                if IsControlJustPressed(1, 46) then
                 print("E basildi")
+                isMenuOpen = true
+			SetNuiFocus(true, true)
+			SendNUIMessage({type = 'openGeneral'})
+			TriggerServerEvent('bank:balance')
+			local playerPed = GetPlayerPed(-1)
                 end
-                break
+                if IsControlJustPressed(1, 322) then
+		isMenuOpen = false
+			SetNuiFocus(false, false)
+			SendNUIMessage({type = 'close'})
+		end
             else
                 atBank = false
             end
@@ -43,3 +55,14 @@ CreateThread(function()
         EndTextCommandSetBlipName(blip)
     end
 end)
+
+function guiMessage(lineOne, lineTwo, lineThree, duration)
+    BeginTextCommandDisplayHelp("THREESTRINGS")
+    AddTextComponentSubstringPlayerName(lineOne)
+    AddTextComponentSubstringPlayerName(lineTwo or "")
+    AddTextComponentSubstringPlayerName(lineThree or "")
+
+    -- shape (always 0), loop (bool), makeSound (bool), duration (5000 max 5 sec)
+    EndTextCommandDisplayHelp(0, false, true, duration or 5000)
+end
+
