@@ -20,6 +20,9 @@ CreateThread(function()
             
             if dist < 1.5 then
                 print("Check!")
+                if IsControlPressed(0,46) then
+                print("E basildi")
+                end
                 break
             else
                 atBank = false
