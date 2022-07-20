@@ -36,7 +36,7 @@ CreateThread(function()
         SetBlipAsShortRange(blip, true)
 
         BeginTextCommandSetBlipName("STRING")
-        AddTextComponentString(tostring(v.name))
+        AddTextComponentString("Banka")
         EndTextCommandSetBlipName(blip)
     end
 end)
