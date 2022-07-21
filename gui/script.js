@@ -1,56 +1,47 @@
 
 $(function() {
 				window.addEventListener('message', function(event) {
-					if (event.data.type === "openGeneral"){
-		                $('#waiting').show();
+					if (event.data.type === "openBank"){
+		                $('#main-menu, #topbar').show();
 		                $('body').addClass("active");
 					} else if(event.data.type === "balanceHUD") {
-							$('.username1').html(event.data.player);
-							$('.curbalance').html(event.data.balance);
+							$('#name').html(event.data.player);
+							$('#balance').html(event.data.balance);
 					} else if (event.data.type === "closeAll"){
-		                $('#waiting, #general, #transferUI, #withdrawUI, #depositUI, #topbar').hide();
+		                $('#main-menu, #transfer-menu, #withdraw-menu, #deposit-menu, #topbar').hide();
 		                $('body').removeClass("active");
 					}
-					else if (event.data.type === "result") {
+					else if (event.data.type === "alert") {
 						if (event.data.t == "success")
-							$("#result").attr('class', 'alert-green');
+							$("#alert").attr('class', 'alert-green');
 						else
-							$("#result").attr('class', 'alert-orange');
-						$("#result").html(event.data.m).show().delay(5000).fadeOut();
+							$("#alert").attr('class', 'alert-orange');
+						$("#alert").html(event.data.m).show().delay(5000).fadeOut();
 					}
 				});
 			});
     		$('.btn-sign-out').click(function(){
-	            $('#general, #waiting, #transferUI, #withdrawUI, #depositUI, #topbar').hide();
+	            $('#main-menu, #transfer-menu, #withdraw-menu, #deposit-menu, #topbar').hide();
 	            $('body').removeClass("active");
 	            $.post('http://fivem-banking/NUIFocusOff', JSON.stringify({}));
 	        })
 	        $('.back').click(function(){
-	            $('#depositUI, #withdrawUI, #transferUI').hide();
-	            $('#general').show();
+	            $('#transfer-menu, #withdraw-menu, #deposit-menu').hide();
+	            $('#main-menu').show();
 	        })
 	        $('#deposit').click(function(){
-	            $('#general').hide();
-	            $('#depositUI').show();
+	            $('#main-menu').hide();
+	            $('#deposit-menu').show();
 	        })
 	        $('#withdraw').click(function(){
-	            $('#general').hide();
-	            $('#withdrawUI').show();
+	            $('#main-menu').hide();
+	            $('#withdraw-menu').show();
 	        })
 	        $('#transfer').click(function(){
-	            $('#general').hide();
-	            $('#transferUI').show();
+	            $('#main-menu').hide();
+	            $('#transfer-menu').show();
 	        })
-	        $('#fingerprint-content').click(function(){
-	            $('.fingerprint-active, .fingerprint-bar').addClass("active")
-	            setTimeout(function(){
-		  		$('#general').css('display', 'block')
-					$('#topbar').css('display', 'flex')
-					$('#waiting').css('display', 'none')
-					$('.fingerprint-active, .fingerprint-bar').removeClass("active")
-				}, 1400);
-	        })
-	        $("#deposit1").submit(function(e) {
+	        $("#deposit-submit").submit(function(e) {
 		        e.preventDefault(); // Prevent form from submitting
 		        $.post('http://fivem-banking/deposit', JSON.stringify({
 		            amount: $("#amount").val()
@@ -59,7 +50,7 @@ $(function() {
 				$('#general').show();
 				$("#amount").val('');
 			});
-			$("#transfer1").submit(function(e) {
+			$("#transfer-submit").submit(function(e) {
 		        e.preventDefault(); // Prevent form from submitting
 		        $.post('http://fivem-banking/transfer', JSON.stringify({
 					to: $("#to").val(),
@@ -69,18 +60,18 @@ $(function() {
 				$('#general').show();
 				$("#amountt").val('');
 			});
-			$("#withdraw1").submit(function(e) {
+			$("#withdraw-submit").submit(function(e) {
 				e.preventDefault(); // Prevent form from submitting
-		        $.post('http://fivem-banking/withdrawl', JSON.stringify({
-		            amountw: $("#amountw").val()
+		        $.post('http://fivem-banking/withdraw', JSON.stringify({
+		            withdraw-amount: $("#withdraw-amount").val()
 		        }));
-				$('#withdrawUI').hide();
-				$('#general').show();
-				$("#amountw").val('');
+				$('#withdraw-menu').hide();
+				$('#main-menu').show();
+				$("#withdraw-amount").val('');
 			});
 			document.onkeyup = function(data){
 		        if (data.which == 27){
-		            $('#general, #waiting, #transferUI, #withdrawUI, #depositUI, #topbar').hide();
+		            $('#main-menu, #transfer-menu, #withdraw-menu, #deposit-menu, #topbar').hide();
 		            $('body').removeClass("active");
 		            $.post('http://fivem-banking/NUIFocusOff', JSON.stringify({}));
 		        }
