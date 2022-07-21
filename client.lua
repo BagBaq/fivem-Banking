@@ -1,6 +1,6 @@
 ESX				= nil
 local atBank	 = false
-local isMenuOpen = true
+local isMenuOpen = false
 
 Citizen.CreateThread(function()
 	while ESX == nil do
@@ -22,33 +22,28 @@ end)
 
 CreateThread(function()
     while true do
-        Wait(1000)
+        Citizen.Wait(1)
         for k, v in pairs(Config.banks) do
             local bankCoords = vector3(v.x, v.y, v.z)
             local dist = #(pedCoords - bankCoords)
             
-            if dist < 1.5 then
-                print("Check!")
-                guiMessage("Bankaya erisin E")
-                
-                if IsControlJustPressed(1, 46) then
+            if dist < 2 then
+                guiMessage("Banka [E]")
+             if IsControlJustReleased(0, 38) then
                 print("E basildi")
                 isMenuOpen = true
-			SetNuiFocus(true, true)
-			SendNUIMessage({type = 'openBank'})
-			TriggerServerEvent('banking:checkBalance')
-			local playerPed = GetPlayerPed(-1)
-                end
-                if IsControlJustPressed(1, 322) then
-		isMenuOpen = false
-			SetNuiFocus(false, false)
-			SendNUIMessage({type = 'closeAll'})
-		end
-            else
-                atBank = false
+			    SetNuiFocus(true, true)
+			    SendNUIMessage({type = 'openBank'})
+			    TriggerServerEvent('banking:checkBalance')
+			    local playerPed = GetPlayerPed(-1)
+             end
+             if IsControlJustReleased(0, 322) then
+		        isMenuOpen = false
+			    SetNuiFocus(false, false)
+			    SendNUIMessage({type = 'closeAll'})
+		     end
             end
         end
-    end
 
     for k, v in pairs(Config["banks"]) do
         local blip = AddBlipForCoord(v.x, v.y, v.z)
@@ -62,6 +57,7 @@ CreateThread(function()
         AddTextComponentString("Banka")
         EndTextCommandSetBlipName(blip)
     end
+end
 end)
 
 RegisterNUICallback('NUIFocusOff', function()
@@ -75,8 +71,6 @@ function guiMessage(lineOne, lineTwo, lineThree, duration)
     AddTextComponentSubstringPlayerName(lineOne)
     AddTextComponentSubstringPlayerName(lineTwo or "")
     AddTextComponentSubstringPlayerName(lineThree or "")
-
-    -- shape (always 0), loop (bool), makeSound (bool), duration (5000 max 5 sec)
     EndTextCommandDisplayHelp(0, false, true, duration or 5000)
 end
 
@@ -93,12 +87,12 @@ AddEventHandler('currentBalance', function(balance)
 end)
 
 RegisterNUICallback('deposit', function(data)
-	TriggerServerEvent('banking:depoMoney', tonumber(data.depo-amount))
+	TriggerServerEvent('banking:depoMoney', tonumber(data.damount))
 	TriggerServerEvent('banking:checkBalance')
 end)
 
 RegisterNUICallback('withdraw', function(data)
-	TriggerServerEvent('banking:withdraw', tonumber(data.withdraw-amount))
+	TriggerServerEvent('banking:withdraw', tonumber(data.wamount))
 	TriggerServerEvent('banking:checkBalance')
 end)
 
@@ -112,12 +106,7 @@ AddEventHandler('balance:back', function(balance)
 end)
 
 RegisterNUICallback('transfer', function(data)
-	TriggerServerEvent('banking:transferCash', data.to, data.transfer-amount)
+	TriggerServerEvent('banking:transferCash', data.to, data.tamount)
 	TriggerServerEvent('banking:checkBalance')
-end)
-
-RegisterNetEvent('banking:showAlert')
-AddEventHandler('banking:showAlert', function(type, message)
-	SendNUIMessage({type = 'alert', m = message, t = type})
 end)
 

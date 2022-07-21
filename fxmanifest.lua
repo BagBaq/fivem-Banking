@@ -19,6 +19,5 @@ client_scripts {
 files {
     'gui/index.html',
     'gui/script.js',
-    'gui/style.css',
-    'gui/img/logo.png'
+    'gui/style.css'
 }

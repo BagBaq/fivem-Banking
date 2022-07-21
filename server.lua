@@ -7,15 +7,17 @@ AddEventHandler('banking:depoMoney', function(amount)
 	local _source = source
 	
 	local xPlayer = ESX.GetPlayerFromId(_source)
-        if amount == nil or amount <= 0 then
-                TriggerClientEvent('banking:showAlert', _source, "error", "Gecersiz miktar")
-        if amount > xPlayer.getMoney() then
-		TriggerClientEvent('banking:showAlert', _source, "error", "Yetersiz para")
-	else
+        --if amount == nil or amount <= 0 then
+        -- yanlis girilmis para
+		--end
+        --if amount > xPlayer.getMoney() then
+		-- yetersiz para
+		--end
+	--else
 		xPlayer.removeMoney(amount)
 		xPlayer.addAccountMoney('bank', tonumber(amount))
-		TriggerClientEvent('banking:showAlert', _source, "success", "Para bankaya yatırıldı")
-	end
+		-- basarili
+	--end
 end)
 
 
@@ -27,14 +29,14 @@ AddEventHandler('banking:withdraw', function(amount)
 	amount = tonumber(amount)
 	base = xPlayer.getAccount('bank').money
         if amount > base then
-                TriggerClientEvent('banking:showAlert', _source, "error", "Bankanizda bu kadar para yok")
+			-- yetersiz para
         end
 	if amount == nil or amount <= 0 then
-		TriggerClientEvent('banking:showAlert', _source, "error", "Gecersiz miktar")
+		-- yanlis girilmis para
 	else
 		xPlayer.removeAccountMoney('bank', amount)
 		xPlayer.addMoney(amount)
-		TriggerClientEvent('banking:showAlert', _source, "success", "Paranizi cektiniz")
+		-- basarili alert
 	end
 end)
 
@@ -55,20 +57,20 @@ AddEventHandler('banking:transferCash', function(tPlayer, amountt)
 	local balance = 0
 
 	if(zPlayer == nil or zPlayer == -1) then
-		TriggerClientEvent('banking:showAlert', _source, "error", "Boyle bir oyuncu yok")
+		-- oyuncu bulunamadı alert
 	else
 		balance = xPlayer.getAccount('bank').money
 		zbalance = zPlayer.getAccount('bank').money
 		
 		if tonumber(_source) == tonumber(tPlayer) then
-			TriggerClientEvent('banking:showAlert', _source, "error", "Kendinize para gönderemezsiniz")
+			--kendimize para gönderme alert
 		else
 			if balance <= 0 or balance < tonumber(amountt) or tonumber(amountt) <= 0 then
-				TriggerClientEvent('banking:showAlert', _source, "error", "Yetersiz para")
+				-- para yok alert
 			else
 				xPlayer.removeAccountMoney('bank', tonumber(amountt))
 				zPlayer.addAccountMoney('bank', tonumber(amountt))
-				TriggerClientEvent('banking:showAlert', _source, "success", "Transfer edildi")
+				-- basarili alert
 			end
 		end
 	end
