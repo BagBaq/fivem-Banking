@@ -1,1 +1,166 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+body.active{
+	background-color: white;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.button-bq {
+	border:none; margin-top: 40px; font-size: 70px; height: 500px; width: 470px; margin-left: 60px; border-radius: 20px;
+  font-family: "Raleway", sans-serif;
+	transition: 0.3s;
+}
+
+.button-bq:hover{
+  background-color: darkseagreen;
+	border-radius: 25px;
+}
+
+.button-ust {
+	border:none; margin-top: 40px; font-size: 70px; height: 100px; width: 550px; margin-left: 60px; border-radius: 20px;
+  font-family: "Raleway", sans-serif;
+	transition: 0.3s;
+}
+
+.button-ust:hover{
+  background-color: darkseagreen;
+	border-radius: 25px;
+}
+
+#topbar{
+	background-color: seagreen;
+	color: whitesmoke;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-family: "Raleway", sans-serif;
+	font-size: 30px;
+}
+
+#dollar{
+	font-family: "Raleway", sans-serif;
+	font-size: 70px;
+	background-color: whitesmoke;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	padding-left: 50px;
+	margin-left: 30px;
+	margin-top: 50px;
+	border-radius: 20px;
+}
+
+#withdraw-submit,#transfer-submit,#deposit-submit{
+	font-family: "Raleway", sans-serif;
+	font-size: 50px;
+	text-align: center;
+	color: whitesmoke;
+	background-color: green;
+	border-radius: 20px;
+    margin-left: 400px;
+    margin-top: 50px;
+	transition: 0.3s;
+	width: 400px;
+	border: none;
+}
+
+#deposit-submit:hover{
+	border-radius: 25px;
+}
+
+#withdraw-submit:hover{
+	border-radius: 25px;
+}
+
+#transfer-submit:hover{
+	border-radius: 25px;
+}
+
+#withdraw-amount,#transfer-amount,#to,#depo-amount{
+	margin-top: 40px;
+	text-decoration:none; 
+	border-color: seagreen;
+	border-width: 2px;
+	border-radius: 25px; 
+	background-color: transparent; 
+	text-align: center; 
+	font-family: "Raleway", sans-serif;
+	font-size: 70px;
+	color:seagreen;
+}
+
+#depo{
+	background-color: whitesmoke;
+	margin-top: 30px;
+	margin-left: 30px;
+	text-align: center;
+	font-family: "Raleway", sans-serif;
+	font-size: 70px;
+	border-radius: 20px;
+	transition: 0.3s;
+}
+
+#depo:hover{
+	background-color: darkseagreen;
+	border-radius: 25px;
+}
+
+
+#withdraw{
+	background-color: whitesmoke;
+	margin-top: 30px;
+	margin-left: 30px;
+	text-align: center;
+	font-family: "Raleway", sans-serif;
+	font-size: 70px;
+	border-radius: 20px;
+	transition: 0.3s;
+}
+#withdraw:hover{
+	background-color: darkseagreen;
+	border-radius: 25px;
+}
+
+
+#transfer{
+	background-color: whitesmoke;
+	margin-top: 30px;
+	margin-left: 30px;
+	text-align: center;
+	font-family: "Raleway", sans-serif;
+	font-size: 70px;
+	border-radius: 20px;
+	transition: 0.3s;
+}
+#transfer:hover{
+	background-color: darkseagreen;
+	border-radius: 25px;
+}
+
+
+#para-yatir{
+	margin-top: 30px;
+	text-align: center;
+	color: seagreen;
+	font-family: "Raleway", sans-serif;
+	font-size: 70px;
+	border-radius: 20px;
+}
+
+#para-yatirin{
+	font-family: "Raleway", sans-serif;
+	font-size: 30px;
+	background-color: whitesmoke;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	padding-left: 50px;
+	margin-left: 30px;
+	margin-top: 50px;
+	border-radius: 20px;
+}

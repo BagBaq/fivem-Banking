@@ -1,4 +1,3 @@
-
 $(function() {
 				window.addEventListener('message', function(event) {
 					if (event.data.type === "openBank"){
@@ -11,21 +10,28 @@ $(function() {
 		                $('#main-menu, #transfer-menu, #withdraw-menu, #deposit-menu, #topbar').hide();
 		                $('body').removeClass("active");
 					}
-					else if (event.data.type === "alert") {
-						if (event.data.t == "success")
-							$("#alert").attr('class', 'alert-green');
-						else
-							$("#alert").attr('class', 'alert-orange');
-						$("#alert").html(event.data.m).show().delay(5000).fadeOut();
-					}
 				});
+				$('#disconnect').click(function(){
+					$('#main-menu, #transfer-menu, #withdraw-menu, #deposit-menu, #topbar').hide();
+					$('body').removeClass("active");
+					fetch('https://fivem-banking/NUIFocusOff', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json; charset=UTF-8',
+						},
+						body: JSON.stringify({})})
+				})
 			});
-    		$('#disconnect').click(function(){
-	            $('#main-menu, #transfer-menu, #withdraw-menu, #deposit-menu, #topbar').hide();
-	            $('body').removeClass("active");
-	            $.post('http://fivem-banking/NUIFocusOff', JSON.stringify({}));
+    		
+	        $('#back').click(function(){
+	            $('#transfer-menu, #withdraw-menu, #deposit-menu').hide();
+	            $('#main-menu').show();
 	        })
-	        $('.back').click(function(){
+			$('#back-1').click(function(){
+	            $('#transfer-menu, #withdraw-menu, #deposit-menu').hide();
+	            $('#main-menu').show();
+	        })
+			$('#back-2').click(function(){
 	            $('#transfer-menu, #withdraw-menu, #deposit-menu').hide();
 	            $('#main-menu').show();
 	        })
@@ -41,30 +47,44 @@ $(function() {
 	            $('#main-menu').hide();
 	            $('#transfer-menu').show();
 	        })
-	        $("#deposit-submit").submit(function(e) {
-		        e.preventDefault(); // Prevent form from submitting
-		        $.post('http://fivem-banking/deposit', JSON.stringify({
-		            depo-amount: $("#depo-amount").val()
-		        }));
+	        $("#deposit-submit").click(function(e) {
+		        e.preventDefault();
+		        fetch('https://fivem-banking/deposit', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json; charset=UTF-8',
+						},
+						body: JSON.stringify({
+							damount: $("#depo-amount").val()
+						})})
 				$('#deposit-menu').hide();
 				$('#main-menu').show();
 				$("#depo-amount").val('');
 			});
-			$("#transfer-submit").submit(function(e) {
-		        e.preventDefault(); // Prevent form from submitting
-		        $.post('http://fivem-banking/transfer', JSON.stringify({
-					to: $("#to").val(),
-		           transfer-amount: $("#transfer-amount").val()
-		        }));
+			$("#transfer-submit").click(function(e) {
+		        e.preventDefault();
+				fetch('https://fivem-banking/transfer', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json; charset=UTF-8',
+						},
+						body: JSON.stringify({
+							tamount: $("#transfer-amount").val(),
+							to: $("#to").val()
+						})});
 				$('#transfer-menu').hide();
 				$('#main-menu').show();
 				$("#transfer-amount").val('');
 			});
-			$("#withdraw-submit").submit(function(e) {
-				e.preventDefault(); // Prevent form from submitting
-		        $.post('http://fivem-banking/withdraw', JSON.stringify({
-		            withdraw-amount: $("#withdraw-amount").val()
-		        }));
+			$("#withdraw-submit").click(function(e) {
+				fetch('https://fivem-banking/withdraw', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json; charset=UTF-8',
+						},
+						body: JSON.stringify({
+							wamount: $("#withdraw-amount").val()
+						})})
 				$('#withdraw-menu').hide();
 				$('#main-menu').show();
 				$("#withdraw-amount").val('');
@@ -73,6 +93,12 @@ $(function() {
 		        if (data.which == 27){
 		            $('#main-menu, #transfer-menu, #withdraw-menu, #deposit-menu, #topbar').hide();
 		            $('body').removeClass("active");
-		            $.post('http://fivem-banking/NUIFocusOff', JSON.stringify({}));
+					fetch('https://fivem-banking/NUIFocusOff', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json; charset=UTF-8',
+						},
+						body: JSON.stringify({})})
 		        }
 		    }
+		
