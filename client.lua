@@ -35,14 +35,14 @@ CreateThread(function()
                 print("E basildi")
                 isMenuOpen = true
 			SetNuiFocus(true, true)
-			SendNUIMessage({type = 'openGeneral'})
+			SendNUIMessage({type = 'openBank'})
 			TriggerServerEvent('banking:checkBalance')
 			local playerPed = GetPlayerPed(-1)
                 end
                 if IsControlJustPressed(1, 322) then
 		isMenuOpen = false
 			SetNuiFocus(false, false)
-			SendNUIMessage({type = 'close'})
+			SendNUIMessage({type = 'closeAll'})
 		end
             else
                 atBank = false
@@ -93,12 +93,12 @@ AddEventHandler('currentBalance', function(balance)
 end)
 
 RegisterNUICallback('deposit', function(data)
-	TriggerServerEvent('banking:depoMoney', tonumber(data.amount))
+	TriggerServerEvent('banking:depoMoney', tonumber(data.depo-amount))
 	TriggerServerEvent('banking:checkBalance')
 end)
 
 RegisterNUICallback('withdraw', function(data)
-	TriggerServerEvent('banking:withdraw', tonumber(data.amountw))
+	TriggerServerEvent('banking:withdraw', tonumber(data.withdraw-amount))
 	TriggerServerEvent('banking:checkBalance')
 end)
 
@@ -112,12 +112,12 @@ AddEventHandler('balance:back', function(balance)
 end)
 
 RegisterNUICallback('transfer', function(data)
-	TriggerServerEvent('banking:transferCash', data.to, data.amountt)
+	TriggerServerEvent('banking:transferCash', data.to, data.transfer-amount)
 	TriggerServerEvent('banking:checkBalance')
 end)
 
 RegisterNetEvent('banking:showAlert')
 AddEventHandler('banking:showAlert', function(type, message)
-	SendNUIMessage({type = 'result', m = message, t = type})
+	SendNUIMessage({type = 'alert', m = message, t = type})
 end)
 
